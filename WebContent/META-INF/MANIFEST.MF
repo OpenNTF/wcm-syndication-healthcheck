@@ -1,0 +1,6 @@
+Specification-Title:Sample Syndication Health Check for IBM Web Content Manager
+Specification-Version:1.0
+Specification-Vendor:IBM Corp
+Manifest-Version: 1.0
+Class-Path: 
+
