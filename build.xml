@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Build file for creating Zip Archive
+-->
+<project name="sample" default="default" basedir=".">
+
+	<target name="properties">
+		<property environment="env"/>
+		<property file="build.properties" />
+		<property name="sample.name" value="wcm-syndication-healthcheck"/>
+		<property name="build.dir" value="build"/>
+		<property name="source.dir"     value="./src"/>
+		<property name="dist.dir" value="${build.dir}/dist"/>
+		<property name="zip.file"       value="${dist.dir}/${sample.name}.zip" />
+		<property name="ear.file"       value="${dist.dir}/${sample.name}.ear" />
+		<property name="war.file"       value="${build.dir}/${sample.name}.war" />
+		<property name="download.file"       value="${dist.dir}/${sample.name}_download.zip" />
+		<property name="proj.classpath" value="${env.PORTALLIBS}/ilwwcm-api.jar:${env.PORTALLIBS}/j2ee.jar" />
+
+		<property name="webcontent.dir" value="./WebContent"/>
+		<property name="documentation.dir" value="./documentation"/>
+	</target>
+
+	<target name="default" depends="properties,clean">
+		<antcall target="makedownload"/>
+	</target>
+
+	<target name="clean" depends="properties">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<!--  Used to build the download package, including doc and the installable archive. -->
+	<target name="makedownload" depends="properties,makezips">
+		<mkdir dir="${dist.dir}" />
+
+		<zip destfile="${download.file}">
+			<zipfileset dir="${dist.dir}">
+				<include name="${sample.name}.ear" />
+			</zipfileset>
+			<zipfileset dir="${basedir}">
+				<include name="LICENSE"/>
+				<include name="NOTICE"/>
+			</zipfileset>
+			<zipfileset dir="${documentation.dir}">
+				<include name="*.pdf"/>
+				<include name="screenshots/**"/>
+			</zipfileset>
+		</zip>
+
+	</target>
+
+	<!--  Used to build the installable archive. -->
+	<target name="makezips" depends="properties">
+		<mkdir dir="${build.dir}/main"/>
+		<mkdir dir="${dist.dir}"/>
+		<javac destdir="${build.dir}/main" classpath="${proj.classpath}" source="1.6" target="1.6">
+         <src path="${source.dir}"/>
+  	</javac>
+		<war destfile="${war.file}" webxml="${webcontent.dir}/WEB-INF/web.xml">
+		  <fileset dir="${webcontent.dir}"/>
+		  <classes dir="${build.dir}/main"/>
+		</war>		
+		<ear destfile="${ear.file}" appxml="${source.dir}/metadata/application.xml">
+      <fileset dir="${build.dir}" includes="${sample.name}.war"/>
+    </ear>
+
+	</target>
+
+</project>
