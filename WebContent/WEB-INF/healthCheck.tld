@@ -1,0 +1,56 @@
+<!DOCTYPE taglib SYSTEM "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<!--
+ * Copyright 2014  IBM Corp.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing permissions and limitations under the
+ * License.
+-->
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>healthcheck</short-name>
+	<display-name>WCM Syndication Health Check Tags</display-name>
+	<description>Tags for validating syndication health with the  system</description>
+	<tag>
+		<name>check</name>
+		<tag-class>com.ibm.sample.wcm.healthcheck.HealthCheckTag</tag-class>
+		<description>check the health check item</description>
+		<attribute>
+			<name>library</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>Library Name</description>
+		</attribute>
+		<attribute>
+			<name>textItem</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>Name of the health check Text item</description>
+		</attribute>
+		<attribute>
+			<name>update</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>Set to true to update the item</description>
+		</attribute>
+		<attribute>
+			<name>restUrl</name>
+			<description>print the REST url for this item</description>
+		</attribute>
+		<attribute>
+			<name>vpContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>specify the virtual portal context</description>
+		</attribute>
+	</tag>
+</taglib>
