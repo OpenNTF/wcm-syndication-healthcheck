@@ -7,18 +7,22 @@ Build file for creating Zip Archive
 	<target name="properties">
 		<property environment="env"/>
 		<property file="build.properties" />
-		<property name="sample.name" value="wcm-syndication-healthcheck"/>
-		<property name="build.dir" value="build"/>
-		<property name="source.dir"     value="./src"/>
-		<property name="dist.dir" value="${build.dir}/dist"/>
-		<property name="zip.file"       value="${dist.dir}/${sample.name}.zip" />
-		<property name="ear.file"       value="${dist.dir}/${sample.name}.ear" />
-		<property name="war.file"       value="${build.dir}/${sample.name}.war" />
-		<property name="download.file"       value="${dist.dir}/${sample.name}_download.zip" />
-		<property name="proj.classpath" value="${env.PORTALLIBS}/ilwwcm-api.jar:${env.PORTALLIBS}/j2ee.jar" />
-
-		<property name="webcontent.dir" value="./WebContent"/>
-		<property name="documentation.dir" value="./documentation"/>
+		<!--
+		Set PORTALLIBS to a directory where ilwwcm-api.jar and j2ee.jar can be found
+		Linux: export PORTALLIBS=~/portal/8001libs
+		Windows: set PORTALLIBS=c:/portal/8001libs
+		-->
+		<property name="proj.classpath" 		value="${env.PORTALLIBS}/ilwwcm-api.jar:${env.PORTALLIBS}/j2ee.jar" />
+		<property name="sample.name" 				value="wcm-syndication-healthcheck"/>
+		<property name="build.dir" 					value="build"/>
+		<property name="source.dir"     		value="src"/>
+		<property name="dist.dir" 					value="${build.dir}/dist"/>
+		<property name="zip.file"       		value="${dist.dir}/${sample.name}.zip" />
+		<property name="ear.file"       		value="${dist.dir}/${sample.name}.ear" />
+		<property name="war.file"       		value="${build.dir}/${sample.name}.war" />
+		<property name="download.file"  		value="${dist.dir}/${sample.name}_download.zip" />
+		<property name="webcontent.dir" 		value="WebContent"/>
+		<property name="documentation.dir" 	value="documentation"/>
 	</target>
 
 	<target name="default" depends="properties,clean">
@@ -40,8 +44,12 @@ Build file for creating Zip Archive
 			<zipfileset dir="${basedir}">
 				<include name="LICENSE"/>
 				<include name="NOTICE"/>
+				<include name="build.xml"/>
+				<include name="${webcontent.dir}" />
 			</zipfileset>
-			<zipfileset dir="${documentation.dir}">
+			<zipfileset dir="${source.dir}" prefix="${source.dir}" />
+			<zipfileset dir="${webcontent.dir}" prefix="${webcontent.dir}" />
+			<zipfileset dir="${documentation.dir}" prefix="${documentation.dir}">
 				<include name="*.pdf"/>
 				<include name="screenshots/**"/>
 			</zipfileset>
